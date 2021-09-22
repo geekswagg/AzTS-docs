@@ -14,11 +14,8 @@
       - [Changing control setting](Readme.md#b-changing-a-control-setting-for-specific-controls)
       - [Customizing specific controls for a service SVT](Readme.md#c-customizing-specific-controls-for-a-service)
       - [Setting up and updating baselines for your org](Readme.md#d-creating-a-custom-control-baseline-for-your-org)
-
-### [Advanced scenarios for org policy customization/extending AzTS](Readme.md#advanced-usage-of-org-policy-extending-azsk) 
-
-- [SVT customization](./Extending%20AzTS/Readme.md)
-   - [Add new control for existing SVT](./Extending%20AzTS/Readme.md)
+- [SVT customization](./Extending%20AzTS/Readme.md#customizing-the-svts)
+   - [Add new control for existing SVT](./Extending%20AzTS/Readme.md#add-new-control-for-existing-svt)
       - [Add new control based on custom Azure policy](./Extending%20AzTS/AddControlForPolicy.md)
       - [Add new control based on ASC Assessment](./Extending%20AzTS/AddControlForAssessment.md)
    - [Update/extend existing control](./Extending%20AzTS/Note.md)
