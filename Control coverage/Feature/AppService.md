@@ -1,6 +1,6 @@
 # AppService
 
-**Resource Type:** Microsoft.ServiceName/subcategory 
+**Resource Type:** Microsoft.Web/sites
 
 ___ 
 
