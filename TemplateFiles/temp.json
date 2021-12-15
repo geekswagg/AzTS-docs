@@ -402,7 +402,8 @@
         "dependsOn": [],
         "properties": {
           "supportsHttpsTrafficOnly": true,
-          "allowBlobPublicAccess" : false
+          "allowBlobPublicAccess" : false,
+          "minimumTlsVersion": "TLS1_2"
         },
         "tags": {
           "displayName": "azskaztsapp"
@@ -771,6 +772,7 @@
             "detailedErrorLoggingEnabled": true,
             "minTlsVersion": 1.2,
             "ftpsState": "Disabled",
+            "alwaysOn": true,
             "appSettings": [
               {
                 "name": "AzureWebJobsStorage",
@@ -923,6 +925,9 @@
         "type": "Microsoft.Web/sites",
         "location": "[resourceGroup().location]",
         "apiVersion": "2015-08-01",
+        "identity": {
+          "type": "SystemAssigned"
+         },
         "dependsOn": [
           "[resourceId('Microsoft.Web/serverfarms', parameters('apiHostingPlanName'))]",
           "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('internalMIName'))]",
@@ -946,6 +951,7 @@
             "detailedErrorLoggingEnabled": true,
             "minTlsVersion": 1.2,
             "ftpsState": "Disabled",
+            "alwaysOn": true,
             "appSettings": [
               {
                 "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
@@ -1009,11 +1015,15 @@
         "apiVersion": "2015-08-01",
         "kind": "app",
         "comments": "This specifies the web app slots.",
+        "identity": {
+          "type": "SystemAssigned"
+         },
         "tags": {
           "displayName": "WebAppSlots"
         },
         "properties": {
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('apiHostingPlanName'))]"
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('apiHostingPlanName'))]",
+          "httpsOnly": true
         },
         "dependsOn": [
           "[resourceId('Microsoft.Web/Sites', variables('WebUI'))]",
