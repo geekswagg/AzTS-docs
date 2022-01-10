@@ -32,7 +32,7 @@
  - [**Extending AzTS Solution**](README.md#2-extending-azts-solution)
      - [Getting Started](README.md#getting-started-1)
      - [Basic scenarios for org policy customization:](README.md#basic-scenarios-for-org-policy-customization-1)
-        - [Update default metadata (display name, recommendation, etc.) for existing controls](./Extend_AzTS_Soln_Scenarios/UpdateDefaultMetadata.md)<br>
+        - [Update metadata (display name, recommendation, etc.) for existing controls](./Extend_AzTS_Soln_Scenarios/UpdateDefaultMetadata.md)<br>
         - [Changing control setting for existing controls](./Extend_AzTS_Soln_Scenarios/ChangeControlSetting.md)<br>
         - [Update control metadata for controls based on ASC Assessment](./Extend_AzTS_Soln_Scenarios/UpdateControlMetadataASCAssessment.md)<br>
         - [Customizing specific controls for an existing service](./Extend_AzTS_Soln_Scenarios/CustomizeSpecificControls.md)<br>
