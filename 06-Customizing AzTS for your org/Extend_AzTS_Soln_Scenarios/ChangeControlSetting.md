@@ -1,6 +1,6 @@
 # Changing control setting for existing controls 
 
-Using Org policy customization, we can change some numeric setting for an existing control. Below is a walk-through example of how to do so leveraging the AzTS-Extended solution that you build using the steps mentioned [here](./SettingUpSolution.md).
+Using Org policy customization, we can change some control setting for an existing control. Below is a walk-through example of how to do so leveraging the AzTS-Extended solution that you build using the steps mentioned [here](./SettingUpSolution.md).
 <br/><br/>A typical setting you may want to tweak is the maximum number of classic admins allowed for your org's subscriptions. 
 It is verified in one of the subscription security controls. (The default value is 2.) Let us change this default value to 5.
 This setting for any feature resides in a file called FeatureName.json (in this case - SubscriptionCore.json).  
@@ -59,8 +59,12 @@ The final JSON file should look like this for our walk-through example:
 <b>Next Steps:</b>
 
 1. Verify the changes in your local system:
- You can verify your changes in the Log Analytics Workspace with the help of this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization).
- <br/> Few simple queries are provided in the above link related to the inventory and Control Scan summary for reference.
+    You can verify your changes in the Log Analytics Workspace with the help of this query.
+    ``` kusto
+    AzSK_ControlResults_CL
+    | where TimeGenerated > ago(1d)
+    ```
+    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.
 
 2. Deploy the changes:
 You can deploy the project with your changes in your current AzTS solution now. Please follow the steps mentioned [here](./DeployInAzTS.md).
