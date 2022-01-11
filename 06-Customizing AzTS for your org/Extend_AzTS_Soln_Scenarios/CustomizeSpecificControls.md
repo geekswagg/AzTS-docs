@@ -10,7 +10,7 @@ Imagine that you want to turn off the evaluation of some control altogether (reg
 
 Below is a walk-through example of how to do so leveraging the AzTS-Extended solution that you build using the steps mentioned [here](./SettingUpSolution.md).
 
-<br/>Because the first-time org policy setup does not customize anything from this, we will need to follow the following steps to modify the Control Evaluator:
+<br/>Because the first time org policy setup does not customize anything from this, we will need to follow the following steps to modify the Control Evaluator:
 
 ### Steps:
 0.  Initially, set up the organization-specific policy customizable AzTS Solution in your local systems by following the steps mentioned [here](./SettingUpSolution.md).
@@ -21,7 +21,7 @@ Below is a walk-through example of how to do so leveraging the AzTS-Extended sol
         "FeatureName": "Storage"
     }
     ```
-3.  Add the control json with all parameters given in template. The following meta-data are required for a control to be scanned:
+3.  Add the control json with all parameters given in template. The following metadata are required for a control to be scanned:
     ``` JSON
     "Controls": [
         {
@@ -39,7 +39,7 @@ Below is a walk-through example of how to do so leveraging the AzTS-Extended sol
     1. For **Id** above: 
         * Since we are modifying control settings for an existing control here, use the same ID as used previously from the FeatureName.json . 
     2. For **ControlID** above: Initial part of the control ID is pre-populated based on the service/feature and security domain you choose for the control (Azure_FeatureName_SecurityDomain_XXX). Please don't use spaces between words instead use underscore '_' to separate words in control ID. To see some of the examples of existing control IDs please check out this [list](https://github.com/azsk/AzTS-docs/tree/main/Control%20coverage#azure-services-supported-by-azts).
-    3. Keep **Enabled** switch to 'Yes' to scan a control.
+    3. Keep **Enabled** switch to 'true' to scan a control.
     4. **DisplayName** is the user friendly name for the control. It does not necessarily needed to be modified.
     5. For **MethodName** above: You can customize the MethodName here. Just make sure to use the same method name in the Control Evaluator in the next steps.
 

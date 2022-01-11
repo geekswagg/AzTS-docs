@@ -4,7 +4,7 @@
 Microsoft.Web/sites
 
 ## Reference
-Refer to [this document](https://github.com/azsk/AzTS-docs/blob/main/Control%20coverage/Feature/AppService.md) for meta-data and evaluation logic of the existing controls of AppService service. 
+Refer to [this document](https://github.com/azsk/AzTS-docs/blob/main/Control%20coverage/Feature/AppService.md) for metadata and evaluation logic of the existing controls of AppService service. 
 
 Certain Azure Policy or ARM APIs are used for evaluation. You can find below the mapping between the properties fetched from ARM APIs and the property name that can be used in the control evaluation while modifying/creating methods in FeatureNameEvaluatorExt class in the FeatureNameControlEvaluatorExt.cs. The properties fetched from ARM APIs are stored in JObject under the name CustomFields. There can be multiple CustomFields such as CustomFields1, CustomFields2, etc with different types of properties. The below mapping will guide you to write the control methods while extending the controls.
 

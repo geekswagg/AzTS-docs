@@ -67,7 +67,7 @@ The solution is working and the target subscription mentioned in the `Processor.
 
 ``` KQL
 AzSK_ControlResults_CL
-| where TimeGenerated > ago(1d)
+| where TimeGenerated > ago(30m)
 ```
 Few simple queries are provided in [this](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) link related to the inventory and Control Scan summary for reference. 
 
@@ -80,7 +80,7 @@ Before we get started with extending the toolkit, let's understand the structure
 The following template files are also included in the solution repository to better guide the users in the authoring controls:
 | Template File Name | High-level Description 
 | ---- | ---- | 
-| FeatureNameExt.json <br> [under the ControlConfigurationExt folder] | This file contains the setting of controls of a specific feature. A few meta-data are required for a control to be scanned which are mentioned in detail further ahead.
+| FeatureNameExt.json <br> [under the ControlConfigurationExt folder] | This file contains the setting of controls of a specific feature. A few metadata are required for a control to be scanned which are mentioned in detail further ahead.
 | FeatureNameControlEvaluatorExt.cs <br> [under the ControlEvaluator folder] | This file is used to override the base control evaluation method.
 
 Next, we will look into basic and advanced applications of organization policy customization through this setup.
