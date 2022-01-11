@@ -11,9 +11,9 @@ This setting for any feature resides in a file called FeatureName.json (in this 
 0.  Initially, set up the organization-specific policy customizable AzTS Solution in your local systems by following the steps mentioned [here](./SettingUpSolution.md).
 1. Copy _FeatureName_Template.json_ file from the ControlConfigurationExt folder and paste it in the same folder. Append "Ext" to the file name and save it.
 <br>    *For this scenario:* 
-<br>    Copy the template file and paste it in the same ControlConfigurationExt folder. Rename and save it as StorageExt.json. 
+<br>    Copy the template file and paste it in the same ControlConfigurationExt folder. Rename and save it as SubscriptionCoreExt.json. 
 
-2. Copy the control metadata from the control array you wish to customize from the Base Control JSON file located in the ConfigurationProvider/ControlConfigurations/Services folder and paste it in the FeatureNameExt.json file (here StorageExt.json). 
+2. Copy the control metadata from the control array you wish to customize from the Base Control JSON file located in the ConfigurationProvider/ControlConfigurations/Services folder and paste it in the FeatureNameExt.json file (in this case - SubscriptionCoreExt.json). 
 <!-- 2.  Keep only the controls in the control array which you wish to customize. Remove the remaining control instances from the feature file. -->
 3.  For this scenario, make changes to the properties of the control so that the final JSON looks like the below:
     ``` JSON
