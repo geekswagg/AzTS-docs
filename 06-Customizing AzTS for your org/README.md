@@ -32,10 +32,9 @@
  - [**Extending AzTS Solution**](README.md#2-extending-azts-solution)
      - [Getting Started](README.md#getting-started-1)
      - [Basic scenarios for org policy customization:](README.md#basic-scenarios-for-org-policy-customization-1)
-        - [Update metadata (display name, recommendation, etc.) for existing controls](./Extend_AzTS_Soln_Scenarios/UpdateDefaultMetadata.md)<br>
+        - [Update metadata (display name, recommendation, etc.) for specific controls for an existing service](./Extend_AzTS_Soln_Scenarios/UpdateDefaultMetadata.md)<br>
         - [Changing control setting for existing controls](./Extend_AzTS_Soln_Scenarios/ChangeControlSetting.md)<br>
         - [Update control metadata for controls based on ASC Assessment](./Extend_AzTS_Soln_Scenarios/UpdateControlMetadataASCAssessment.md)<br>
-        - [Customizing specific controls for an existing service](./Extend_AzTS_Soln_Scenarios/CustomizeSpecificControls.md)<br>
      - [Advanced scenarios for org policy customization:](README.md#advanced-scenarios-for-org-policy-customization-1) 
         - [Update/extend existing control by custom Azure policy](./Extend_AzTS_Soln_Scenarios/CustomizeControlEvaluator.md)<br>
         - [Update/extend existing control by custom ASC Assessment](./Extend_AzTS_Soln_Scenarios/CustomizeASCControls.md) <br>
@@ -138,10 +137,10 @@ In this option to customize org policy, we use the Extended AzTS solution which 
 
 The typical workflow to achieve any listed scenarios will remain same and will involve the following basic steps:
 1. Set up the AzTS Extended solution following the steps mentioned [here](./Extend_AzTS_Soln_Scenarios/SettingUpSolution.md). 
-2. Modify or Author control metadata (JSON files).
-3. Modify or Author control methods in respective control evaluator files.
+2. Modify or author control metadata (JSON files).
+3. Modify or author control methods in respective control evaluator files.
 
-   > You can read more about the AzTS Security Controls and their implementation [here](./Prerequisite.md).
+   > You can read more about the AzTS Security Controls and their implementation [here](./Extend_AzTS_Soln_Scenarios/Prerequisite.md).
 
 4. Build and run the solution in your local system and verify your custom code takes effect.
 <br>
@@ -150,12 +149,14 @@ The typical workflow to achieve any listed scenarios will remain same and will i
 
 ### <b>Basic scenarios for org policy customization</b>
 
+
+   > Prior to achieving any below mentioned scenario, set up the organization-specific policy customizable AzTS Solution in your local system by following the steps mentioned [here](./Extend_AzTS_Soln_Scenarios/SettingUpSolution.md).
+
 Click on the below links to look at typical scenarios in which you would want to customize the org policy and ways to accomplish them:
 
-[1. Update default metadata (display name, recommendation, etc.) for existing controls](./Extend_AzTS_Soln_Scenarios/UpdateDefaultMetadata.md)<br>
+[1. Update  metadata (display name, recommendation, etc.) for existing controls](./Extend_AzTS_Soln_Scenarios/UpdateDefaultMetadata.md)<br>
 [2. Changing control setting for existing controls](./Extend_AzTS_Soln_Scenarios/ChangeControlSetting.md)<br>
 [3. Update control metadata for controls based on ASC Assessment](./Extend_AzTS_Soln_Scenarios/UpdateControlMetadataASCAssessment.md)<br>
-[4. Customizing specific controls for an existing service](./Extend_AzTS_Soln_Scenarios/CustomizeSpecificControls.md)<br>
 <!-- #### Setting up and updating baselines for your org --> 
 
 ### <b>Advanced scenarios for org policy customization</b>

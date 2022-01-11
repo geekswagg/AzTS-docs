@@ -6,13 +6,13 @@ Below is the typical schema for each control inside the feature json
 
 ```JSON
 {
-    "ControlID": "Azure_Subscription_AuthZ_Limit_ClassicAdmin_Count",   //Human friendly control Id. The format used is Azure_<FeatureName>_<Category>_<ControlName>
+    "ControlID": "Azure_Subscription_AuthZ_Limit_ClassicAdmin_Count",   //User friendly control Id. The format used is Azure_<FeatureName>_<Category>_<ControlName>
     "Description": "Limit access per subscription to 2 or less classic administrators",  //Description for the control, which is rendered in all the reports it generates (CSV, AI telemetry, emails etc.).
     "Id": "SubscriptionCore160",   //This is internal ID and should be unique. Since the ControlID can be modified, this internal ID ensures that we have a unique link to all the control results evaluation.
     "ControlSeverity": "High", //Represents the severity of the Control. 
     "Automated": "Yes",   //Indicates whether the given control is Manual/Automated.
     "MethodName": "CheckCoAdminCount",  // Represents the Control method that is responsible to evaluate this control. It should be present inside the feature SVT associated with this control.
-    "DisplayName": "Limit access per subscription to 2 or less classic administrators", // Represents human friendly name for the control.
+    "DisplayName": "Limit access per subscription to 2 or less classic administrators", // Represents user friendly name for the control.
     "Recommendation": "You need to remove any 'Classic Administrators/Co-Administrators' who should not be in the role. Please follow these steps: (a) Logon to https://portal.azure.com/ (b) Navigate to Subscriptions (c) Select the subscription (d) Go to 'Access Control (IAM)' and select the 'Classic Administrators' tab. (e) Select the co-administrator account that has to be removed and click on the 'Remove' button. (f) Perform this operation for all the co-administrators that need to be removed from the subscription.",	  //Recommendation typically provides the precise instructions on how to fix this control.
     "Tags": [
          "SDL",

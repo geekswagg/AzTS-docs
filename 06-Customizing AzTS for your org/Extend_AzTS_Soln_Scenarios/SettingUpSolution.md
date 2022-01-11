@@ -52,6 +52,8 @@ Let's start!
     * In Processor.cs file (line 33), mention the ID of the target subscription to be scanned:<br />
                ![Processor.cs Step 4](../../Images/06_OrgPolicy_Setup_Step4.png)
 
+      **Remember**: Before deploying, undo this change here and comment out the `line 29` to make the *Run* function as queue-triggered instead of timer-triggered which is done for local testing purposes. 
+
 4. Build and Run
    - Click on the AzTS_Extended as shown below to run the project: <br />
       ![Build Step 1](../../Images/06_OrgPolicy_Setup_BuildStep.png)<br/>
