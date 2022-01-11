@@ -150,7 +150,7 @@ The typical workflow to achieve any listed scenarios will remain same and will i
 ### <b>Basic scenarios for org policy customization</b>
 
 
-   > Prior to achieving any below mentioned scenario, set up the organization-specific policy customizable AzTS Solution in your local system by following the steps mentioned [here](./Extend_AzTS_Soln_Scenarios/SettingUpSolution.md).
+   > **Prerequisite:** Prior to achieving any below mentioned scenario, set up the org policy customizable AzTS Solution in your local system by following the steps mentioned [here](./Extend_AzTS_Soln_Scenarios/SettingUpSolution.md).
 
 Click on the below links to look at typical scenarios in which you would want to customize the org policy and ways to accomplish them:
 
