@@ -24,7 +24,7 @@
         - [Customizing specific controls for a service SVT](./AzTS_CMET_Tool_Scenarios/CustomizeSpecificControls.md)
         - [Setting up and updating baselines for your org](./AzTS_CMET_Tool_Scenarios/SettingUpdatingBaseline.md)
      - [Advanced scenarios for org policy customization:](README.md#advanced-scenarios-for-org-policy-customization) 
-        - [Add new control based on ASC Assessment evaluation](./AzTS_CMET_Tool_Scenarios/AddControlForAssessment.md)
+        - [Add new control based on MDC Assessment evaluation](./AzTS_CMET_Tool_Scenarios/AddControlForAssessment.md)
         - [Add new control based on custom Azure Policy evaluation](./AzTS_CMET_Tool_Scenarios/AddControlForPolicy.md)
         <!-- - [Update/extend existing control by custom ASC Assessment](./AzTS_CMET_Tool_Scenarios/CustomizeASCControls.md)  -->
         - [Update/extend existing control by custom Azure policy](./AzTS_CMET_Tool_Scenarios/CustomizeCustomPolicyControls.md)
@@ -34,10 +34,10 @@
      - [Basic scenarios for org policy customization:](README.md#basic-scenarios-for-org-policy-customization-1)
         - [Update metadata (display name, recommendation, etc.) for specific controls for an existing service](./Extend_AzTS_Soln_Scenarios/UpdateDefaultMetadata.md)<br>
         - [Changing control setting for existing controls](./Extend_AzTS_Soln_Scenarios/ChangeControlSetting.md)<br>
-        - [Update control metadata for controls based on ASC Assessment](./Extend_AzTS_Soln_Scenarios/UpdateControlMetadataASCAssessment.md)<br>
+        - [Update control metadata for controls based on MDC Assessment](./Extend_AzTS_Soln_Scenarios/UpdateControlMetadataASCAssessment.md)<br>
      - [Advanced scenarios for org policy customization:](README.md#advanced-scenarios-for-org-policy-customization-1) 
         - [Update/extend existing control by custom Azure policy](./Extend_AzTS_Soln_Scenarios/CustomizeControlEvaluator.md)<br>
-        - [Update/extend existing control by custom ASC Assessment](./Extend_AzTS_Soln_Scenarios/CustomizeASCControls.md) <br>
+        - [Update/extend existing control by custom MDC Assessment](./Extend_AzTS_Soln_Scenarios/CustomizeASCControls.md) <br>
         - [Add new control for existing service](./Extend_AzTS_Soln_Scenarios/AddNewControl.md)<br>
         - [Add new service altogether (non-existing service)]() - Coming soon!
      
@@ -118,7 +118,7 @@ The typical workflow for all policy changes and customizatio will remain same an
 [3. Setting up and updating baselines for your org](./AzTS_CMET_Tool_Scenarios/SettingUpdatingBaseline.md)<br>
 
 ### <b>Advanced scenarios for org policy customization</b>
-[1. Add new control based on ASC Assessment evaluation](./AzTS_CMET_Tool_Scenarios/AddControlForAssessment.md)<br>
+[1. Add new control based on MDC Assessment evaluation](./AzTS_CMET_Tool_Scenarios/AddControlForAssessment.md)<br>
 [2. Add new control based on custom Azure Policy evaluation](./AzTS_CMET_Tool_Scenarios/AddControlForPolicy.md)<br>
 [3. Update/extend existing control by custom Azure policy](./AzTS_CMET_Tool_Scenarios/CustomizeCustomPolicyControls.md)<br>
 
@@ -156,7 +156,7 @@ Click on the below links to look at typical scenarios in which you would want to
 
 [1. Update  metadata (display name, recommendation, etc.) for existing controls](./Extend_AzTS_Soln_Scenarios/UpdateDefaultMetadata.md)<br>
 [2. Changing control setting for existing controls](./Extend_AzTS_Soln_Scenarios/ChangeControlSetting.md)<br>
-[3. Update control metadata for controls based on ASC Assessment](./Extend_AzTS_Soln_Scenarios/UpdateControlMetadataASCAssessment.md)<br>
+[3. Update control metadata for controls based on MDC Assessment](./Extend_AzTS_Soln_Scenarios/UpdateControlMetadataASCAssessment.md)<br>
 <!-- #### Setting up and updating baselines for your org --> 
 
 ### <b>Advanced scenarios for org policy customization</b>
@@ -164,7 +164,7 @@ Click on the below links to look at typical scenarios in which you would want to
 It is powerful capability of AzTS to enable an org to customize the control behaviour. You will be able to achieve the following scenarios:
 
 [1. Update/extend existing control by custom Azure policy](./Extend_AzTS_Soln_Scenarios/CustomizeControlEvaluator.md)<br>
-[2. Update/extend existing control by custom ASC Assessment](./Extend_AzTS_Soln_Scenarios/CustomizeASCControls.md) <br>
+[2. Update/extend existing control by custom MDC Assessment](./Extend_AzTS_Soln_Scenarios/CustomizeASCControls.md) <br>
 [3. Add new control for existing service](./Extend_AzTS_Soln_Scenarios/AddNewControl.md)<br>
 4. Add new service altogether (non-existing service) - Coming soon!
 <br>
