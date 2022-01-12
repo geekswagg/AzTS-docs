@@ -3,8 +3,9 @@
 Using Org policy customization, we can change some MDC (Microsoft Defender for Cloud) assessment setting for an existing control. Below is a walk-through example of how to do so leveraging the AzTS-Extended solution that you built using the steps mentioned [here](./SettingUpSolution.md).
 <br/>
 <br/>A typical setting you may want to modify is the name of the MDC assessment that is being scanned for a control according to your org's needs. 
-<br/>For this scenario, Let us change the MDC assessment value for the "Azure_Storage_NetSec_Restrict_Network_Access" existing control from ["2a1a9cdf-e04d-429a-8416-3bfb72a1b26f"](https://portal.azure.com/#blade/Microsoft_Azure_Policy/PolicyDetailBlade/definitionId/%2Fproviders%2FMicrosoft.Authorization%2FpolicyDefinitions%2F2a1a9cdf-e04d-429a-8416-3bfb72a1b26f)  to ["ad4f3ff1-30eb-5042-16ed-27198f640b8d"](https://portal.azure.com/#blade/Microsoft_Azure_Policy/PolicyDetailBlade/definitionId/%2Fproviders%2FMicrosoft.Authorization%2FpolicyDefinitions%2F34c877ad-507e-4c82-993e-3452a6e0ad3c). 
-This setting for any feature resides in a file called FeatureName.json (in this case - Storage.json) inside folder ConfigurationProvider/ControlConfigurations. 
+<br/>For this scenario, let us change the MDC assessment value for the "Azure_Storage_NetSec_Restrict_Network_Access" existing control from ["2a1a9cdf-e04d-429a-8416-3bfb72a1b26f"](https://portal.azure.com/#blade/Microsoft_Azure_Policy/PolicyDetailBlade/definitionId/%2Fproviders%2FMicrosoft.Authorization%2FpolicyDefinitions%2F2a1a9cdf-e04d-429a-8416-3bfb72a1b26f)  to ["ad4f3ff1-30eb-5042-16ed-27198f640b8d"](https://portal.azure.com/#blade/Microsoft_Azure_Policy/PolicyDetailBlade/definitionId/%2Fproviders%2FMicrosoft.Authorization%2FpolicyDefinitions%2F34c877ad-507e-4c82-993e-3452a6e0ad3c). 
+<br>This setting for any feature resides in a file called FeatureName.json (in this case - Storage.json) inside folder ConfigurationProvider/ControlConfigurations. 
+
 <br/>Because the first time org policy setup does not customize anything from this, we will need to follow the following steps to modify the MDC assessments settings:
 
 ### Steps:
@@ -12,6 +13,8 @@ This setting for any feature resides in a file called FeatureName.json (in this 
 1. Copy _FeatureName_Template.json_ file from the ControlConfigurationExt folder and paste it in the same folder. Rename it by appending "Ext" to the file name and save it.
 <br>    *For this scenario:* 
 <br>    Copy the template (_FeatureName_Template.json_) file and paste it in the same ControlConfigurationExt folder. Rename and save it as StorageExt.json for this scenario. 
+
+    > Precautionary Note: Make sure the file name i.e. FeatureNameExt.json is in Camel case. 
 
 2. Copy the control metadata from the control array you wish to customize from the Built-in control JSON file (in this case - Storage.json) located in the ConfigurationProvider/ControlConfigurations folder and paste it in the FeatureNameExt.json file (in this case - StorageExt.json). 
 
@@ -63,7 +66,7 @@ This setting for any feature resides in a file called FeatureName.json (in this 
     ``` kusto
     AzSK_ControlResults_CL
     | where TimeGenerated > ago(30m)
-    | where ControlName_s == "Azure_Subscription_AuthZ_Remove_Management_Certs"
+    | where ControlName_s == "Azure_Storage_NetSec_Restrict_Network_Access"
     ```
     Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.
 
