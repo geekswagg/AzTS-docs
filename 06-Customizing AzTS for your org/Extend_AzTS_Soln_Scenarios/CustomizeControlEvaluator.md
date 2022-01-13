@@ -8,14 +8,22 @@ This setting resides in a file called FeatureNameControlEvaluator.cs.
 
 ### Steps:
 0.  Initially, set up the organization-specific policy customizable AzTS Solution in your local systems by following the steps mentioned [here](./SettingUpSolution.md).
-1.  Copy _FeatureNameExt.json_ file and rename it accordingly. For example: StorageExt.json
-2.  Fill the parameters according to the feature. For example: 
+1. Copy _FeatureName_Template.json_ file from the ControlConfigurationExt folder and paste it in the same folder. Rename it by appending "Ext" to the file name and save it.
+<br>    *For this scenario:* 
+<br>    Copy the template (_FeatureName_Template.json_) file and paste it in the same ControlConfigurationExt folder. Rename and save it as StorageExt.json for this scenario. 
+
+    > Precautionary Note: Make sure the file name i.e. FeatureNameExt.json is in Camel case. 
+
+2. Copy the control metadata from the control array you wish to customize from the Built-in control JSON file (in this case - Storage.json) located in the ConfigurationProvider/ControlConfigurations folder and paste it in the FeatureNameExt.json file (in this case - StorageExt.json). 
+
+3. Fill the FeatureName parameter according to the feature. For example:
     ``` JSON
     {
         "FeatureName": "Storage"
     }
     ```
-3.  Add the control json with all parameters given in template. The following metadata are required for a control to be scanned:
+
+4.  Add the control json with all parameters given in template. The following metadata are required for a control to be scanned:
     ``` JSON
     "Controls": [
         {
@@ -30,15 +38,11 @@ This setting resides in a file called FeatureNameControlEvaluator.cs.
     ]
     ```
 
-    1. For **Id** above: 
-        * Since we are modifying control settings for an existing control here, use the same ID as used previously from the FeatureName.json . 
-    2. For **ControlID** above: Initial part of the control ID is pre-populated based on the service/feature and security domain you choose for the control (Azure_FeatureName_SecurityDomain_XXX). Please don't use spaces between words instead use underscore '_' to separate words in control ID. To see some of the examples of existing control IDs please check out this [list](https://github.com/azsk/AzTS-docs/tree/main/Control%20coverage#azure-services-supported-by-azts).
-    3. Keep **Enabled** switch to 'true' to scan a control.
-    4. **DisplayName** is the user friendly name for the control. It does not necessarily needed to be modified.
-    5. For **MethodName** above: You can customize the MethodName here. Just make sure to use the same method name in the Control Evaluator in the next steps.
+    1. Keep **Enabled** switch to 'true' to scan a control.
+    2. For **MethodName** above: You can customize the MethodName here. Just make sure to use the same method name in the Control Evaluator in the next steps.
 
-4. Copy _FeatureNameControlEvaluatorExt.cs_ and rename it accordingly. For example: StorageControlEvaluatorExt.cs
-5. Change the FeatureNameEvaluatorExt and FeatureNameControlEvaluator according to the baseControlEvaluator name (line 13) as shown below.
+5. Copy _FeatureNameControlEvaluatorExt.cs_ and rename it accordingly. For example: StorageControlEvaluatorExt.cs
+6. Change the FeatureNameEvaluatorExt and FeatureNameControlEvaluator according to the baseControlEvaluator name (line 13) as shown below.
     ``` CS
     // class FeatureNameEvaluatorExt : FeatureNameControlEvaluator
     class StorageControlEvaluatorExt : StorageControlEvaluator
@@ -46,7 +50,7 @@ This setting resides in a file called FeatureNameControlEvaluator.cs.
         // Add control methods here        
     }
     ```
-6. Add the control method according to the [feature documentation](FeatureCoverage/README.md).
+7. Add the control method according to the [feature documentation](FeatureCoverage/README.md).
     Modify the Status reason of the Control Result in here according to the org's policy. 
     <!-- Note: Use the same method name as mentioned above in the Control JSON file. -->
 
@@ -98,18 +102,29 @@ public class StorageControlEvaluatorExt : StorageControlEvaluator
 ```
 
 
-7. Build and Run
+8. Build and Run
    - Click on the AzTS_Extended as shown below to run the project: <br />
       ![Build Step 1](../../Images/06_OrgPolicy_Setup_BuildStep.png)<br/>
 <!-- TODO Add the SubscriptionCore file EXT added log -->
    - Output looks like below:<br/>
       ![Run Output](../../Images/06_OrgPolicy_Setup_RunStep1.png)<br />
       ![Run Output](../../Images/06_OrgPolicy_Setup_RunStep2.png)
-   Congratulations! Customizing the Control Evaluator Scenario is complete with this step.
 
-8. Verify the changes in your local system:
- You can verify your changes in the Log Analytics Workspace with the help of this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization).
- <br/> Few simple queries are provided in the above link related to the inventory and Control Scan summary for reference.
 
-9. Deploy the changes:
+<b>Next Steps:</b>
+
+1. Verify the changes in your local system:
+    You can verify your changes in the Log Analytics Workspace with the help of this query.
+    ``` kusto
+    AzSK_ControlResults_CL
+    | where TimeGenerated > ago(30m)
+    | where ControlName_s == "Azure_Storage_NetSec_Restrict_Network_Access"
+    ```
+    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.
+
+
+2. Deploy the changes:
 You can deploy the project with your changes in your current AzTS solution now. Please follow the steps mentioned [here](./DeployInAzTS.md).
+
+
+   **Congratulations! Customizing the Control Evaluator Scenario is complete with this step.**
