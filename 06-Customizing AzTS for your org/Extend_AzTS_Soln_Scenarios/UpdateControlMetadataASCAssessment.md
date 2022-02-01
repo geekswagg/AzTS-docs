@@ -72,6 +72,41 @@ Using Org policy customization, we can change some MDC (Microsoft Defender for C
 
 
 2. Deploy the changes:
-You can deploy the project with your changes in your current AzTS solution now. Please follow the steps mentioned [here](./DeployInAzTS.md).
+You can deploy the JSON files with your changes in your current AzTS solution now using the helper script. 
+Please follow the steps mentioned below.
 
+- Download the script from [here](./Scripts/DeployCustomControlConfiguration.ps1)
+  > **Note:** Script can be downloaded by clicking Alt+Raw button.
+- Open a PowerShell session.
+- Navigate to the download location of the script in PowerShell session.
+    ```Powershell
+   cd "Script downloads location"
+    ```
+- Unblock the downloaded script.
+    ```Powershell
+   Unblock-File -Path ".\DeployCustomControlConfiguration.ps1"
+    ```
+- Load the script in current PowerShell session.
+    ```Powershell
+    . ".\DeployCustomControlConfiguration.ps1"
+    ```
+    > **Note:** Do not miss the '.' at beginning of the above command.
+- Connect to AzAccount
+    ```Powershell
+     Connect-AzAccount -Tenant $TenantId
+    ```
+    > **Note:** Tenant Id *must* be specified when connecting to AzAccount
+- Invoke the configuration cmdlet
+    ```Powershell
+    DeployCustomControlConfiguration 
+        -ScanHostRGName "AzTSHostingRGName" 
+        -StorageAccountName "<StorageAccountName>" 
+        -ContainerName "orgpolicy" 
+        -JsonPath "path\to\JSON\files\SubscriptionCoreExt.json" 
+        -FeatureName "subscriptioncore" 
+        -SubscriptionId "<SubId>"
+    ```
+- Finally, you can validate your changes in the Log Analytics Workspace using the above query and validate the changes in the UI as well.
+    
+    
 <br><b>Congratulations! Modifying control metadata for controls based on MDC Assessment Scenario is complete with this step.</b>

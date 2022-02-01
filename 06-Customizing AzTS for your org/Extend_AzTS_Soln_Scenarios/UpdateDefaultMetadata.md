@@ -86,6 +86,41 @@ Because the first time org policy setup does not customize anything from this, w
     Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.
 
 2. Deploy the changes:
-You can deploy the project with your changes in your current AzTS solution now. Please follow the steps mentioned [here](./DeployInAzTS.md).
+You can deploy the JSON files with your changes in your current AzTS solution now using the helper script. 
+Please follow the steps mentioned below.
+
+- Download the script from [here](./Scripts/DeployCustomControlConfiguration.ps1)
+  > **Note:** Script can be downloaded by clicking Alt+Raw button.
+- Open a PowerShell session.
+- Navigate to the download location of the script in PowerShell session.
+    ```Powershell
+   cd "Script downloads location"
+    ```
+- Unblock the downloaded script.
+    ```Powershell
+   Unblock-File -Path ".\DeployCustomControlConfiguration.ps1"
+    ```
+- Load the script in current PowerShell session.
+    ```Powershell
+    . ".\DeployCustomControlConfiguration.ps1"
+    ```
+    > **Note:** Do not miss the '.' at beginning of the above command.
+- Connect to AzAccount
+    ```Powershell
+     Connect-AzAccount -Tenant $TenantId
+    ```
+    > **Note:** Tenant Id *must* be specified when connecting to AzAccount
+- Invoke the configuration cmdlet
+    ```Powershell
+    DeployCustomControlConfiguration 
+        -ScanHostRGName "AzTSHostingRGName" 
+        -StorageAccountName "<StorageAccountName>" 
+        -ContainerName "orgpolicy" 
+        -JsonPath "path\to\JSON\files\StorageExt.json" 
+        -FeatureName "storage" 
+        -SubscriptionId "<SubId>"
+    ```
+- Finally, you can validate your changes in the Log Analytics Workspace using the above query and validate the changes in the UI as well.
+    
 
 <br><b>Congratulations! Updating metadata scenario is complete with this step.</b>
