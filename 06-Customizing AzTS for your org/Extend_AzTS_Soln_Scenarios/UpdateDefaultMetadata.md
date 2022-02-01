@@ -26,6 +26,7 @@ Because the first time org policy setup does not customize anything from this, w
 3.  For this scenario, make changes to the properties of the respective controls so that the final JSON looks like the below:
 ``` JSON
 {
+    "FeatureName": "Storage",
     "Controls": [
         {
             // The following parameters can be taken from the FeatureName.json directly as there will no change in them for the scope of this scenario. 
