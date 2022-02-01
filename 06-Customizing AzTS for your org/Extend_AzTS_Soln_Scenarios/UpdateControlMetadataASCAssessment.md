@@ -61,17 +61,7 @@ Using Org policy customization, we can change some MDC (Microsoft Defender for C
 
 <b>Next Steps:</b>
 
-1. Verify the changes in your local system:
-    You can verify your changes in the Log Analytics Workspace with the help of this query.
-    ``` kusto
-    AzSK_ControlResults_CL
-    | where TimeGenerated > ago(30m)
-    | where ControlName_s == "Azure_Storage_NetSec_Restrict_Network_Access"
-    ```
-    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.
-
-
-2. Deploy the changes:
+1. Deploy the changes:
 You can deploy the JSON files with your changes in your current AzTS solution now using the helper script. 
 Please follow the steps mentioned below.
 
@@ -108,5 +98,14 @@ Please follow the steps mentioned below.
     ```
 - Finally, you can validate your changes in the Log Analytics Workspace using the above query and validate the changes in the UI as well.
     
+2. Verify the changes in your local system:
+    You can verify your changes in the Log Analytics Workspace with the help of this query.
+    ``` kusto
+    AzSK_ControlResults_CL
+    | where TimeGenerated > ago(30m)
+    | where ControlName_s == "Azure_Storage_NetSec_Restrict_Network_Access"
+    ```
+    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.
+
     
 <br><b>Congratulations! Modifying control metadata for controls based on MDC Assessment Scenario is complete with this step.</b>

@@ -372,11 +372,12 @@ enum EventStatus
 
 class ScannerConstants
 {
-    static [string] $OnDemandScanInstructionMsg = "This command will perform an important operations. It will:`r`n`n" + 
-					"   [1] Trigger baseline controls inventory processor `r`n"
+    static [string] $OnDemandScanInstructionMsg = "This command will perform 2 important operations. It will:`r`n`n" + 
+					"   [1] Trigger baseline controls inventory processor `r`n" +
+                    "   [2] Trigger work item scheduler `r`n"
 					
     static [string] $OnDemandScanWarningMsg = "Please note that if the AzTS Soln has been setup recently, this command can take up to 30-45 minutes as it has to create tables in Log Analytics workspace for each inventory that is processed as part of this command.";
-    static [string] $NextStepsMsg = "'BaselineControls' inventory process completed.";
+    static [string] $NextStepsMsg = "Baseline Controls inventory process and Scan has been completed. You can see the logs in the LA Workspace and UI.";
 
     static [string] $DoubleDashLine    = "================================================================================"
     static [string] $SingleDashLine    = "--------------------------------------------------------------------------------"
