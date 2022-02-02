@@ -74,11 +74,9 @@ function TriggerBaselineControlInv
         try
         {
             Write-Host $([ScannerConstants]::DoubleDashLine)
-            Write-Host "Running Azure Tenant Security Solution setup...`n" -ForegroundColor Cyan
-            Write-Host $([ScannerConstants]::OnDemandScanInstructionMsg ) -ForegroundColor Cyan
-            Write-Host $([ScannerConstants]::OnDemandScanWarningMsg ) -ForegroundColor Yellow
-            Write-Host $([ScannerConstants]::SingleDashLine)
+            #Write-Host "Running Azure Tenant Security Solution setup...`n" -ForegroundColor Cyan
 
+            
             $StartTimeAsString = [Datetime]::UtcNow.ToString("MM/dd/yyyy")
 
             $maFunctionApp = Get-AzWebApp -ResourceGroupName $ScanHostRGName | Where-Object { $_.Name -match "MetadataAggregator"} | Select -First 1
@@ -89,7 +87,7 @@ function TriggerBaselineControlInv
             {
                 if($ForceFetch)
                 {
-                    Write-Host "[WARNING] Enabling forceFetch for [$($maFunctionApp.Name)] function app." -ForegroundColor Yellow
+                    Write-Host "Enabling forceFetch for [$($maFunctionApp.Name)] function app." -ForegroundColor Cyan
                     $StartTimeAsString = [Datetime]::UtcNow.ToString("MM/dd/yyyy, HH:mm:ss")
                     $maFunctionAppSlot = Get-AzWebAppSlot -ResourceGroupName $ScanHostRGName -Name $maFunctionApp.Name -Slot 'production'
                     $appSettings = $maFunctionAppSlot.SiteConfig.AppSettings
@@ -101,7 +99,8 @@ function TriggerBaselineControlInv
 
                     $settings['WebJobConfigurations__ForceFetch'] = $true.ToString().Tolower()
                     $updatedSlotDetails = Set-AzWebAppSlot -ResourceGroupName $ScanHostRGName -Name $maFunctionApp.Name -Slot 'production' -AppSettings $settings;
-                    Write-Host "Enabled forceFetch for [$($maFunctionApp.Name)] function app." -ForegroundColor Yellow
+                    Write-Host "Enabled forceFetch for [$($maFunctionApp.Name)] function app." -ForegroundColor Green
+                    Write-Host $([ScannerConstants]::SingleDashLine)
                 }
                 
 
@@ -110,17 +109,17 @@ function TriggerBaselineControlInv
                 $functionAppMaterKey = $functionAppKeys.masterKey;
                 $laWorkspaceId = $laWorkspace.CustomerId.Guid
                 
-                Write-Host "Triggering Baseline Control  Inventory" -ForegroundColor Yellow
-                TriggerFunction -FunctionAppHostName $functionAppHostName -FunctionName  $([ScannerConstants]::FunctionApp.BaselineControlsInvProcessor) -FunctionAppMaterKey $functionAppMaterKey
-                
+                Write-Host "Step 2: Triggering Baseline Control Inventory" -ForegroundColor Cyan
+                TriggerFunction -FunctionAppHostName $functionAppHostName -FunctionName  $([ScannerConstants]::FunctionApp.BaselineControlsInvProcessor) -FunctionAppMaterKey $functionAppMaterKey                
                 WaitForFunctionToComplete -StartTimeAsString $StartTimeAsString -FunctionName $([ScannerConstants]::FunctionApp.BaselineControlsInvProcessor) -ApplicationInsightId $applicationInsight.Id -LAWorkspaceId $laWorkspaceId                
+                Write-Host "Completed Baseline Control Inventory Processing successfully." -ForegroundColor Green
 
-                Write-Host "Triggering Ondemand Scan" -ForegroundColor Yellow
+                Write-Host $([ScannerConstants]::DoubleDashLine)
+
+                Write-Host "Step 3: Triggering Control Scan processing." -ForegroundColor Cyan
                 TriggerFunction -FunctionAppHostName $functionAppHostName -FunctionName $([ScannerConstants]::FunctionApp.WorkItemScheduler) -FunctionAppMaterKey $functionAppMaterKey
-
                 WaitForFunctionToComplete -StartTimeAsString $StartTimeAsString -FunctionName $([ScannerConstants]::FunctionApp.WorkItemScheduler) -ApplicationInsightId $applicationInsight.Id  -LAWorkspaceId $laWorkspaceId
-
-                
+                Write-Host "Completed Control Scan processing successfully." -ForegroundColor Green
 
                 Write-Host "$([Constants]::DoubleDashLine)" #-ForegroundColor $([Constants]::MessageType.Info)
                 Write-Host "$([ScannerConstants]::NextStepsMsg)" -ForegroundColor Cyan
@@ -140,7 +139,7 @@ function TriggerBaselineControlInv
         {
             if($ForceFetch -and $maFunctionApp -ne $null)
             {
-                Write-Host "[WARNING] Disabling forceFetch for [$($maFunctionApp.Name)] function app." -ForegroundColor Yellow
+                Write-Host "Disabling forceFetch for [$($maFunctionApp.Name)] function app." -ForegroundColor Cyan
                 $maFunctionAppSlot = Get-AzWebAppSlot -ResourceGroupName $ScanHostRGName -Name $maFunctionApp.Name -Slot 'production'
                 $appSettings = $maFunctionAppSlot.SiteConfig.AppSettings
                 #setup the current app settings
@@ -151,6 +150,8 @@ function TriggerBaselineControlInv
 
                 $settings['WebJobConfigurations__ForceFetch'] = $false.ToString().Tolower()
                 $updatedSlotDetails = Set-AzWebAppSlot -ResourceGroupName $ScanHostRGName -Name $maFunctionApp.Name -Slot 'production' -AppSettings $settings;
+                Write-Host "Disabled forceFetch for [$($maFunctionApp.Name)] function app." -ForegroundColor Green
+
             }
         }
     }
@@ -372,9 +373,10 @@ enum EventStatus
 
 class ScannerConstants
 {
-    static [string] $OnDemandScanInstructionMsg = "This command will perform 2 important operations. It will:`r`n`n" + 
-					"   [1] Trigger baseline controls inventory processor `r`n" +
-                    "   [2] Trigger work item scheduler `r`n"
+    static [string] $OnDemandScanInstructionMsg = "This command will perform 3 important operations. It will:`r`n`n" + 
+					"   [1] Deploy the custom control JSON to the storage account `r`n" +
+					"   [2] Trigger baseline controls inventory processor `r`n" +
+                    "   [3] Trigger work item scheduler `r`n"
 					
     static [string] $OnDemandScanWarningMsg = "Please note that if the AzTS Soln has been setup recently, this command can take up to 30-45 minutes as it has to create tables in Log Analytics workspace for each inventory that is processed as part of this command.";
     static [string] $NextStepsMsg = "Baseline Controls inventory process and Scan has been completed. You can see the logs in the LA Workspace and UI.";
@@ -418,6 +420,8 @@ class ScannerConstants
             WorkItemScheduler = 'ATS_04_WorkItemScheduler'
     }
 
+
+
 }
 
 function DeployCustomControlConfiguration
@@ -426,8 +430,11 @@ function DeployCustomControlConfiguration
     Begin
     {
         Write-Host $([ScannerConstants]::DoubleDashLine)
-        Write-Host "Uploading the custom control JSONs to the storage account... `n" -ForegroundColor Cyan
-
+        Write-Host $([ScannerConstants]::OnDemandScanInstructionMsg ) -ForegroundColor Cyan
+        Write-Host $([ScannerConstants]::OnDemandScanWarningMsg ) -ForegroundColor Cyan
+        Write-Host $([ScannerConstants]::DoubleDashLine)
+        
+        Write-Host "Step 1: Uploading the custom control JSONs to the storage account. `n" -ForegroundColor Cyan
         $StorageAccount = Get-AzStorageAccount -ResourceGroupName $ScanHostRGName -Name $StorageAccountName             
     }
     Process
@@ -444,8 +451,8 @@ function DeployCustomControlConfiguration
           Set-AzStorageBlobContent @BlobObj -Verbose
 
           
-        Write-Host "Uploaded the custom control JSONs to the storage account... `n" -ForegroundColor Cyan
-        Write-Host $([ScannerConstants]::DoubleDashLine)
+        Write-Host "Uploaded the custom control JSONs to the storage account. `n" -ForegroundColor Green
+        #Write-Host $([ScannerConstants]::DoubleDashLine)
 
         TriggerBaselineControlInv -SubscriptionId $SubscriptionId -ScanHostRGName $ScanHostRGName -ForceFetch
     }
