@@ -94,8 +94,16 @@ Because the first time org policy setup does not customize anything from this, w
 
 <b>Next Steps:</b>
 
-1. Deploy the changes:
-You can deploy the JSON files with your changes in your current AzTS solution now using the helper script. 
+1. Verify your local system CHANGES:
+ You can verify your changes in the Log Analytics Workspace with the help of this query.
+    ``` kusto
+    AzSK_ControlResults_CL
+    | where TimeGenerated > ago(30m)
+    | where ControlName_s == "Azure_Storage_AuthN_Dont_Allow_Anonymous" or ControlName_s == "Azure_Storage_DP_Encrypt_In_Transit" or ControlName_s == "Azure_Storage_DP_Use_Secure_TLS_Version" 
+    ```
+    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.   Deploy the changes:
+
+2. You can deploy the JSON files with your changes in your current AzTS solution now using the helper script. 
 Please follow the steps mentioned below.
 
 - Download the script from [here](./Scripts/DeployCustomControlConfiguration.ps1)
@@ -130,13 +138,5 @@ Please follow the steps mentioned below.
         -SubscriptionId "<SubId>"
     ```
 
-2. Verify your local system CHANGES:
- You can verify your changes in the Log Analytics Workspace with the help of this query.
-    ``` kusto
-    AzSK_ControlResults_CL
-    | where TimeGenerated > ago(30m)
-    | where ControlName_s == "Azure_Storage_AuthN_Dont_Allow_Anonymous" or ControlName_s == "Azure_Storage_DP_Encrypt_In_Transit" or ControlName_s == "Azure_Storage_DP_Use_Secure_TLS_Version" 
-    ```
-    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.    
 
 <br><b>Congratulations! Updating metadata scenario is complete with this step.</b>
