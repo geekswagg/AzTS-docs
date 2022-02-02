@@ -94,7 +94,7 @@ Because the first time org policy setup does not customize anything from this, w
 
 <b>Next Steps:</b>
 
-1. Verify your local system CHANGES:
+1. Verify your local system changes:
  You can verify your changes in the Log Analytics Workspace with the help of this query.
     ``` kusto
     AzSK_ControlResults_CL
@@ -137,6 +137,6 @@ Please follow the steps mentioned below.
         -FeatureName "storage" `
         -SubscriptionId "<SubId>"
     ```
-
+    You can once again validate your changes in the LA Workspace and UI. 
 
 <br><b>Congratulations! Updating metadata scenario is complete with this step.</b>
