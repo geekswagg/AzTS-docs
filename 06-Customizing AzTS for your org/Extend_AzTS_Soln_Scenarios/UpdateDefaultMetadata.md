@@ -7,7 +7,7 @@ Using Org policy customization, we can change some basic metadata for existing c
 
 Consider that you want to turn off the evaluation of some control altogether (regardless of whether people filter using the Baseline tags or not). Also, for another control, you want people to use a recommendation which leverages an internal tool the security team in your org has developed. Let us do this for the Storage.json file. Specifically, we will:
 
-1. Turn off the evaluation of Azure_Storage_Audit_Issue_Alert_AuthN_Req altogether.
+1. Turn off the evaluation of Azure_Storage_DP_Use_Secure_TLS_Version altogether.
 2. Modify severity of Azure_Storage_AuthN_Dont_Allow_Anonymous to Critical for our org (it is High by default).
 3. Change the recommendation for people in our org to follow if they need to address an issue with the Azure_Storage_DP_Encrypt_In_Transit control.
 
@@ -16,19 +16,44 @@ Below is a walk-through example of how to do so leveraging the AzTS-Extended sol
 Because the first time org policy setup does not customize anything from this, we will need to follow the following steps to modify the Control Evaluator:
 
 ### Steps:
-0.  Initially, set up the organization-specific policy customizable AzTS Solution in your local systems by following the steps mentioned [here](./SettingUpSolution.md).
-1. Copy _FeatureName_Template.json_ file from the ControlConfigurationExt folder and paste it in the same folder. Append "Ext" to the file name and save it.
+0.  Initially, set up the org-specific policy customizable AzTS Solution in your local systems by following the steps mentioned [here](./SettingUpSolution.md).
+1. Copy _FeatureName_Template.json_ file from the ControlConfigurationExt folder and paste it in the same folder. Rename it by appending "Ext" to the file name and save it.
 <br>    *For this scenario:* 
-<br>    Copy the template file and paste it in the same ControlConfigurationExt folder. Rename and save it as StorageExt.json. 
+<br>    Copy the template (_FeatureName_Template.json_) file and paste it in the same ControlConfigurationExt folder. Rename and save it as StorageExt.json for this scenario. 
+
+    > Precautionary Note: Make sure the file name i.e. FeatureNameExt.json is in Pascal case. 
 
 2. Copy the control metadata from the control array you wish to customize from the Base Control JSON file located in the ConfigurationProvider/ControlConfigurations/Services folder and paste it in the FeatureNameExt.json file (here StorageExt.json). 
+3. Fill the FeatureName parameter according to the feature. For example:
+    ``` JSON
+    {
+        "FeatureName": "Storage"
+    }
+    ```
 <!-- 2.  Keep only the controls in the control array which you wish to customize. Remove the remaining control instances from the feature file. -->
-3.  For this scenario, make changes to the properties of the respective controls so that the final JSON looks like the below:
+4.  For this scenario, make changes to the properties of the respective controls so that the final JSON looks like the below:
 ``` JSON
 {
     "FeatureName": "Storage",
     "Controls": [
         {
+            // 3.a
+            // For this control, we achieve the scenario where we turn off the evaluation of the control altoghether.
+
+            // The following parameters can be taken from the FeatureName.json directly as there will no change in them for the scope of this scenario. 
+            "ControlID": "Azure_Storage_DP_Use_Secure_TLS_Version",
+            "Id": "AzureStorage300",
+            "Automated": "Yes",
+            "MethodName": "CheckStorageTLSVersion",
+            "DisplayName": "Use approved version of TLS for Azure Storage",
+
+            // Turning off the evaluation of Azure_Storage_Audit_Issue_Alert_AuthN_Req altogether
+            "Enabled": false
+        },
+        {
+            // 3.b
+            // For this control, we achieve the scenario where we modify severity of the control to Critical for our org (it is High by default).
+            
             // The following parameters can be taken from the FeatureName.json directly as there will no change in them for the scope of this scenario. 
             "ControlID": "Azure_Storage_AuthN_Dont_Allow_Anonymous",
             "Id": "AzureStorage110",
@@ -41,17 +66,9 @@ Because the first time org policy setup does not customize anything from this, w
             "ControlSeverity": "Critical"
         },
         {
-            // The following parameters can be taken from the FeatureName.json directly as there will no change in them for the scope of this scenario. 
-            "ControlID": "Azure_Storage_Audit_Issue_Alert_AuthN_Req",
-            "Id": "AzureStorage120",
-            "Automated": "Yes",
-            "MethodName": "CheckStorageMetricAlert",
-            "DisplayName": "Alert rules must be configured for tracking anonymous activity",
+            // 3.c
+            // For this control, we achieve the scenario where we change the recommendation according to needs of the org.
 
-            // Turning off the evaluation of Azure_Storage_Audit_Issue_Alert_AuthN_Req altogether
-            "Enabled": false
-        },
-        {
             // The following parameters can be taken from the FeatureName.json directly as there will no change in them for the scope of this scenario. 
             "ControlID": "Azure_Storage_DP_Encrypt_In_Transit",
             "Id": "AzureStorage160",
@@ -105,11 +122,11 @@ Please follow the steps mentioned below.
 - Invoke the configuration cmdlet
     ```Powershell
     DeployCustomControlConfiguration 
-        -ScanHostRGName "AzTSHostingRGName" 
-        -StorageAccountName "<StorageAccountName>" 
-        -ContainerName "orgpolicy" 
-        -JsonPath "path\to\JSON\files\StorageExt.json" 
-        -FeatureName "storage" 
+        -ScanHostRGName "AzTSHostingRGName" `
+        -StorageAccountName "<StorageAccountName>" ` 
+        -ContainerName "orgpolicy" `
+        -JsonPath "path\to\JSON\files\StorageExt.json" `
+        -FeatureName "storage" `
         -SubscriptionId "<SubId>"
     ```
 
@@ -118,7 +135,7 @@ Please follow the steps mentioned below.
     ``` kusto
     AzSK_ControlResults_CL
     | where TimeGenerated > ago(30m)
-    | where ControlName_s == "Azure_Storage_AuthN_Dont_Allow_Anonymous" or ControlName_s == "Azure_Storage_DP_Encrypt_In_Transit" or ControlName_s == "Azure_Storage_Audit_Issue_Alert_AuthN_Req" 
+    | where ControlName_s == "Azure_Storage_AuthN_Dont_Allow_Anonymous" or ControlName_s == "Azure_Storage_DP_Encrypt_In_Transit" or ControlName_s == "Azure_Storage_DP_Use_Secure_TLS_Version" 
     ```
     Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.    
 

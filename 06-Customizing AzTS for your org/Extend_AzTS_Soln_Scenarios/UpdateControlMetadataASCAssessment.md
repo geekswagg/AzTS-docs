@@ -9,12 +9,12 @@ Using Org policy customization, we can change some MDC (Microsoft Defender for C
 <br/>Because the first time org policy setup does not customize anything from this, we will need to follow the following steps to modify the MDC assessments settings:
 
 ### Steps:
-0.  Initially, set up the organization-specific policy customizable AzTS Solution in your local systems by following the steps mentioned [here](./SettingUpSolution.md).
+0.  Initially, set up the org-specific policy customizable AzTS Solution in your local systems by following the steps mentioned [here](./SettingUpSolution.md).
 1. Copy _FeatureName_Template.json_ file from the ControlConfigurationExt folder and paste it in the same folder. Rename it by appending "Ext" to the file name and save it.
 <br>    *For this scenario:* 
 <br>    Copy the template (_FeatureName_Template.json_) file and paste it in the same ControlConfigurationExt folder. Rename and save it as StorageExt.json for this scenario. 
 
-    > Precautionary Note: Make sure the file name i.e. FeatureNameExt.json is in Camel case. 
+    > Precautionary Note: Make sure the file name i.e. FeatureNameExt.json is in Pascal case. 
 
 2. Copy the control metadata from the control array you wish to customize from the Built-in control JSON file (in this case - Storage.json) located in the ConfigurationProvider/ControlConfigurations folder and paste it in the FeatureNameExt.json file (in this case - StorageExt.json). 
 
