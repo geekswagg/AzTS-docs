@@ -37,7 +37,7 @@ Because the first time org policy setup does not customize anything from this, w
     "FeatureName": "Storage",
     "Controls": [
         {
-            // 3.a
+            // 4.a Scenario:
             // For this control, we achieve the scenario where we turn off the evaluation of the control altoghether.
 
             // The following parameters can be taken from the FeatureName.json directly as there will no change in them for the scope of this scenario. 
@@ -51,7 +51,7 @@ Because the first time org policy setup does not customize anything from this, w
             "Enabled": false
         },
         {
-            // 3.b
+            // 4.b Scenario:
             // For this control, we achieve the scenario where we modify severity of the control to Critical for our org (it is High by default).
             
             // The following parameters can be taken from the FeatureName.json directly as there will no change in them for the scope of this scenario. 
@@ -66,7 +66,7 @@ Because the first time org policy setup does not customize anything from this, w
             "ControlSeverity": "Critical"
         },
         {
-            // 3.c
+            // 4.c Scenario:
             // For this control, we achieve the scenario where we change the recommendation according to needs of the org.
 
             // The following parameters can be taken from the FeatureName.json directly as there will no change in them for the scope of this scenario. 
