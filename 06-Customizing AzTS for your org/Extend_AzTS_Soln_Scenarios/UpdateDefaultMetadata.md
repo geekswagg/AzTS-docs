@@ -130,7 +130,7 @@ Please follow the steps mentioned below.
         -SubscriptionId "<SubId>"
     ```
 
-2. Verify the changes in your local system:
+2. Verify your local system CHANGES:
  You can verify your changes in the Log Analytics Workspace with the help of this query.
     ``` kusto
     AzSK_ControlResults_CL
