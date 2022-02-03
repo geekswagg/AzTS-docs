@@ -72,7 +72,7 @@ Using Org policy customization, we can change some MDC (Microsoft Defender for C
 
     AzSK_SSAssessmentMetaData_CL
     | where TimeGenerated > ago(24h)
-    | where Name_g contains "ad4f3ff1-30eb-5042-16ed-27198f640b8d"
+    | where Name_g == "ad4f3ff1-30eb-5042-16ed-27198f640b8d"
     ``` 
 
     For the `AzSK_ControlResults_CL` query, the control result (i.e. VerificationResult_s) should match with the "StatusCode" of the `AzSK_SSAssessmentInv_CL` query result. You can view the metadata of the assessment using the `AzSK_SSAssessmentMetaData_CL` query.
@@ -109,7 +109,7 @@ Please follow the steps mentioned below.
     > **Note:** Tenant Id *must* be specified when connecting to AzAccount
 - Invoke the configuration cmdlet
     ```Powershell
-    DeployCustomControlConfiguration 
+    DeployCustomControlConfiguration `
         -ScanHostRGName "AzTSHostingRGName" `
         -StorageAccountName "<StorageAccountName>" `
         -ContainerName "orgpolicy" `
@@ -131,7 +131,7 @@ Please follow the steps mentioned below.
 
     AzSK_SSAssessmentMetaData_CL
     | where TimeGenerated > ago(24h)
-    | where Name_g contains "ad4f3ff1-30eb-5042-16ed-27198f640b8d"
+    | where Name_g == "ad4f3ff1-30eb-5042-16ed-27198f640b8d"
     ``` 
 
     For the `AzSK_ControlResults_CL` query, the control result (i.e. VerificationResult_s) should match with the "StatusCode" of the `AzSK_SSAssessmentInv_CL` query result. You can view the metadata of the assessment using the `AzSK_SSAssessmentMetaData_CL` query.
