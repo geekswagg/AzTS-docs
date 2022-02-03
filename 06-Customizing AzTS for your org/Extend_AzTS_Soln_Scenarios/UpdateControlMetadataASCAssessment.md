@@ -14,7 +14,7 @@ Using Org policy customization, we can change some MDC (Microsoft Defender for C
 <br>    *For this scenario:* 
 <br>    Copy the template (_FeatureName_Template.json_) file and paste it in the same ControlConfigurationExt folder. Rename and save it as StorageExt.json for this scenario. 
 
-    > Precautionary Note: Make sure the file name i.e. FeatureNameExt.json is in Pascal case. 
+    > Note: Make sure the file name i.e. FeatureNameExt.json is in Pascal case. 
 
 2. Copy the control metadata from the control array you wish to customize from the Built-in control JSON file (in this case - Storage.json) located in the ConfigurationProvider/ControlConfigurations folder and paste it in the FeatureNameExt.json file (in this case - StorageExt.json). 
 
@@ -59,6 +59,27 @@ Using Org policy customization, we can change some MDC (Microsoft Defender for C
       ![Run Output](../../Images/06_OrgPolicy_Setup_RunStep1.png)<br />
       ![Run Output](../../Images/06_OrgPolicy_Setup_RunStep2.png)
 
+6. Verify your local system changes:
+ You can verify your changes in the Log Analytics Workspace with the help of this query.
+    ``` kusto
+    AzSK_ControlResults_CL
+    | where TimeGenerated > ago(30m)
+    | where ControlName_s == "Azure_Storage_NetSec_Restrict_Network_Access"
+
+    AzSK_SSAssessmentInv_CL
+    | where TimeGenerated > ago(24h)
+    | where AssessmentName_g == "ad4f3ff1-30eb-5042-16ed-27198f640b8d"
+
+    AzSK_SSAssessmentMetaData_CL
+    | where TimeGenerated > ago(24h)
+    | where Name_g contains "ad4f3ff1-30eb-5042-16ed-27198f640b8d"
+    ``` 
+
+    For the `AzSK_ControlResults_CL` query, the control result (i.e. VerificationResult_s) should match with the "StatusCode" of the `AzSK_SSAssessmentInv_CL` query result. You can view the metadata of the assessment using the `AzSK_SSAssessmentMetaData_CL` query.
+
+    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.
+
+
 <b>Next Steps:</b>
 
 1. Deploy the changes:
@@ -89,23 +110,32 @@ Please follow the steps mentioned below.
 - Invoke the configuration cmdlet
     ```Powershell
     DeployCustomControlConfiguration 
-        -ScanHostRGName "AzTSHostingRGName" 
-        -StorageAccountName "<StorageAccountName>" 
-        -ContainerName "orgpolicy" 
-        -JsonPath "path\to\JSON\files\SubscriptionCoreExt.json" 
-        -FeatureName "subscriptioncore" 
+        -ScanHostRGName "AzTSHostingRGName" `
+        -StorageAccountName "<StorageAccountName>" `
+        -ContainerName "orgpolicy" `
+        -JsonPath "path\to\JSON\files\StorageExt.json" `
+        -FeatureName "storage" `
         -SubscriptionId "<SubId>"
     ```
-- Finally, you can validate your changes in the Log Analytics Workspace using the above query and validate the changes in the UI as well.
     
-2. Verify the changes in your local system:
-    You can verify your changes in the Log Analytics Workspace with the help of this query.
+2. Verify your deployed changes:
+ You can verify your changes in the Log Analytics Workspace with the help of this query.
     ``` kusto
     AzSK_ControlResults_CL
     | where TimeGenerated > ago(30m)
     | where ControlName_s == "Azure_Storage_NetSec_Restrict_Network_Access"
-    ```
-    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.
 
+    AzSK_SSAssessmentInv_CL
+    | where TimeGenerated > ago(24h)
+    | where AssessmentName_g == "ad4f3ff1-30eb-5042-16ed-27198f640b8d"
+
+    AzSK_SSAssessmentMetaData_CL
+    | where TimeGenerated > ago(24h)
+    | where Name_g contains "ad4f3ff1-30eb-5042-16ed-27198f640b8d"
+    ``` 
+
+    For the `AzSK_ControlResults_CL` query, the control result (i.e. VerificationResult_s) should match with the "StatusCode" of the `AzSK_SSAssessmentInv_CL` query result. You can view the metadata of the assessment using the `AzSK_SSAssessmentMetaData_CL` query.
+
+    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.
     
 <br><b>Congratulations! Modifying control metadata for controls based on MDC Assessment Scenario is complete with this step.</b>

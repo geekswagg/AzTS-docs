@@ -59,13 +59,13 @@ function TriggerBaselineControlInv
     )
     Begin
         {
-            $currentContext = $null
-            $contextHelper = [ContextHelper]::new()
-            $currentContext = $contextHelper.SetContext($SubscriptionId)
-            if(-not $currentContext)
-            {
-                return;
-            }
+            #$currentContext = $null
+            #$contextHelper = [ContextHelper]::new()
+            #$currentContext = $contextHelper.SetContext($SubscriptionId)
+            #if(-not $currentContext)
+            #{
+            #   return;
+            #}
             #. ".\TokenProvider.ps1"
         }
     Process
@@ -444,7 +444,7 @@ function DeployCustomControlConfiguration
         $BlobObj = @{
             File             = $JsonPath
             Container        = $ContainerName
-            Blob             = "Ext/" + $FeatureName + ".ext.json"
+            Blob             = "Ext/" + $FeatureName.ToString().Tolower() + ".ext.json"
             Context          = $Context
             StandardBlobTier = 'Hot'
           }
@@ -457,3 +457,4 @@ function DeployCustomControlConfiguration
         TriggerBaselineControlInv -SubscriptionId $SubscriptionId -ScanHostRGName $ScanHostRGName -ForceFetch
     }
 }
+

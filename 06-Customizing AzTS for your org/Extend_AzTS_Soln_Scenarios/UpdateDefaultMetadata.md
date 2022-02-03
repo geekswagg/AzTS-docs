@@ -21,7 +21,7 @@ Because the first time org policy setup does not customize anything from this, w
 <br>    *For this scenario:* 
 <br>    Copy the template (_FeatureName_Template.json_) file and paste it in the same ControlConfigurationExt folder. Rename and save it as StorageExt.json for this scenario. 
 
-    > Precautionary Note: Make sure the file name i.e. FeatureNameExt.json is in Pascal case. 
+    > Note: Make sure the file name i.e. FeatureNameExt.json is in Pascal case. 
 
 2. Copy the control metadata from the control array you wish to customize from the Base Control JSON file located in the ConfigurationProvider/ControlConfigurations/Services folder and paste it in the FeatureNameExt.json file (here StorageExt.json). 
 3. Fill the FeatureName parameter according to the feature. For example:
@@ -84,26 +84,29 @@ Because the first time org policy setup does not customize anything from this, w
 }
 ```
 
-4. Build and Run
+5. Build and Run
    - Click on the AzTS_Extended as shown below to run the project: <br />
       ![Build Step 1](../../Images/06_OrgPolicy_Setup_BuildStep.png)<br/>
    - Output looks like below:<br/>
       ![Run Output](../../Images/06_OrgPolicy_Setup_RunStep1.png)<br />
       ![Run Output](../../Images/06_OrgPolicy_Setup_RunStep2.png)
    
-
-<b>Next Steps:</b>
-
-1. Verify your local system changes:
+6. Verify your local system changes:
  You can verify your changes in the Log Analytics Workspace with the help of this query.
     ``` kusto
     AzSK_ControlResults_CL
     | where TimeGenerated > ago(30m)
     | where ControlName_s == "Azure_Storage_AuthN_Dont_Allow_Anonymous" or ControlName_s == "Azure_Storage_DP_Encrypt_In_Transit" or ControlName_s == "Azure_Storage_DP_Use_Secure_TLS_Version" 
-    ```
-    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.   Deploy the changes:
+    ``` 
 
-2. You can deploy the JSON files with your changes in your current AzTS solution now using the helper script. 
+    For the `AzSK_ControlResults_CL` query, you should be able to find two control scanned i.e. "Azure_Storage_DP_Encrypt_In_Transit" and "Azure_Storage_AuthN_Dont_Allow_Anonymous". Since we have disabled the control Azure_Storage_DP_Use_Secure_TLS_Version, the Control Scan Result would not be able to show that in result. For the remaining two controls, you can verify their ControlSeverity and Recommendation respectively. 
+
+    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.
+
+<b>Next Steps:</b>
+
+1. Deploy the changes:
+You can deploy the JSON files with your changes in your current AzTS solution now using the helper script. 
 Please follow the steps mentioned below.
 
 - Download the script from [here](./Scripts/DeployCustomControlConfiguration.ps1)
@@ -137,6 +140,24 @@ Please follow the steps mentioned below.
         -FeatureName "storage" `
         -SubscriptionId "<SubId>"
     ```
-    You can once again validate your changes in the LA Workspace and UI. 
+
+2. Verify your deployed changes:
+ You can verify your changes in the Log Analytics Workspace with the help of this query.
+    ``` kusto
+    AzSK_BaselineControlsInv_CL
+    | where ControlId_s contains "Azure_Storage_DP_Use_Secure_TLS_Version" or ControlId_s contains "Azure_Storage_DP_Encrypt_In_Transit" or ControlId_s contains "Azure_Storage_AuthN_Dont_Allow_Anonymous"
+
+    AzSK_ControlResults_CL
+    | where TimeGenerated > ago(30m)
+    | where ControlName_s == "Azure_Storage_AuthN_Dont_Allow_Anonymous" or ControlName_s == "Azure_Storage_DP_Encrypt_In_Transit" or ControlName_s == "Azure_Storage_DP_Use_Secure_TLS_Version" 
+    ```
+
+    For the `AzSK_BaselineControlsInv_CL` query, you should be able to find two controls proccessed in the results i.e. Azure_Storage_DP_Encrypt_In_Transit and Azure_Storage_AuthN_Dont_Allow_Anonymous. Since we have disabled the control Azure_Storage_DP_Use_Secure_TLS_Version, the Baseline Control Inventory would not be able to show that in result. For the remaining two controls, you can verify their ControlSeverity and Recommendation respectively. 
+
+    For the `AzSK_ControlResults_CL` query, you should be able to find two control scanned i.e. Azure_Storage_DP_Encrypt_In_Transit and Azure_Storage_AuthN_Dont_Allow_Anonymous. Since we have disabled the control Azure_Storage_DP_Use_Secure_TLS_Version, the Control Scan Result would not be able to show that in result. For the remaining two controls, you can verify their ControlSeverity and Recommendation respectively. 
+
+    Few simple queries are provided in this [link](https://github.com/azsk/AzTS-docs/tree/main/01-Setup%20and%20getting%20started#4-log-analytics-visualization) related to the inventory and Control Scan summary for reference.
+
+
 
 <br><b>Congratulations! Updating metadata scenario is complete with this step.</b>
